@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import * as Mongoose from "mongoose";
 
-let database: mongoose.Connection;
+let database: Mongoose.Connection;
 
 export const connect = () => {
     const uri = "mongodb://testUser:testPassword@0.0.0.0:27017";
@@ -9,14 +9,14 @@ export const connect = () => {
         return;
     }
 
-    mongoose.connect(uri, {
+    Mongoose.connect(uri, {
         useNewUrlParser: true,
         useFindAndModify: true,
         useUnifiedTopology: true,
         useCreateIndex: true
     });
 
-    database = mongoose.connection;
+    database = Mongoose.connection;
 
     database.once("open", async () => {
         console.log("Connected to database");
@@ -32,5 +32,5 @@ export const disconnect = () => {
         return;
     }
 
-    mongoose.disconnect();
+    Mongoose.disconnect();
 };

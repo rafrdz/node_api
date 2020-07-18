@@ -2,21 +2,26 @@
   "name": "node_api",
   "version": "1.0.0",
   "description": "RESTful API built with Node, Typescript, MongoDB, and Docker",
-  "main": "index.js",
+  "main": "src/app.ts",
   "repository": "https://github.com/rafrdz/node_api.git",
   "author": "Rafael Rodriguez <hellorafrdz@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "watch-ts": "tsc -w",
-    "watch-node": "nodemon dist/app.js",
-    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript, Node\" -c \"yello.bold, cyan.bold\" \"yarn run watch-ts\" \"yarn run watch-node\""
+    "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+    "dev": "nodemon",
+    "build": "tsc",
+    "script": "cd src/scripts && ts-node"
   },
   "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.25"
+  },
+  "devDependencies": {
     "@types/express": "^4.17.7",
     "@types/mongoose": "^5.7.32",
-    "concurrently": "^5.2.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.9.24",
-    "nodemon": "^2.0.4"
+    "@types/node": "^14.0.23",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   }
 }

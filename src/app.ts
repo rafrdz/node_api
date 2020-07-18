@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import * as express from "express";
 
 import { connect } from "./db/db";
 import * as bookController from "./controllers/bookController";
@@ -12,7 +12,7 @@ app.set("port", process.env.PORT || 3000);
 connect();
 
 // API Endpoints
-app.get("/", (req: Request, res: Response) => {res.send("Hello There")});
+app.get("/", (req: express.Request, res: express.Response) => {res.send("Hello There")});
 
 // API Endpoints
 app.get("/books", bookController.allBooks);
