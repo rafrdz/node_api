@@ -1,26 +1,27 @@
-import * as express from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
+import bodyParser from "body-parser";
 
-import { connect } from "./db/db";
-import * as bookController from "./controllers/bookController";
+import connect from "./connect";
+import * as BookController from "./controllers/book_controller";
 
-// Express App Config
-const app = express();
-app.use(express.json());
-app.set("port", process.env.PORT || 3000);
+const app: Application = express();
+const port: number = 5000 || process.env.PORT;
+const db: string = "mongodb://testUser:testPassword@db:27017/books?authSource=admin";
 
-// Connect to the database
-connect();
+connect(db);
 
-// API Endpoints
-app.get("/", (req: express.Request, res: express.Response) => {res.send("Hello There")});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// API Endpoints
-app.get("/books", bookController.allBooks);
-app.get("/book/:id", bookController.getBook);
-app.post("/book", bookController.addBook);
-app.put("/book/:id", bookController.updateBook);
-app.delete("/book/:id", bookController.deleteBook);
+app.get("/", (req: Request, res: Response, next: NextFunction) => {
+    res.send("Hello There");
+});
 
-const server = app.listen(app.get("port"), () => {
-    console.log("App is running on http://localhost:%d", app.get("port"));
+app.get("/book/all", BookController.getAllBooks);
+app.get("/book/id/:id", BookController.getBookByID);
+app.post("/book/add", BookController.addBook);
+app.post("book/delete/:id", BookController.deleteBookByID);
+
+app.listen(port, () => {
+    console.log(`Server running on ${port}`);
 });

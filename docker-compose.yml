@@ -1,5 +1,13 @@
 version: '3.8'
 services:
+  api:
+    build: '.'
+    image: 'node_app:latest'
+    container_name: 'node_api'
+    ports:
+      - 5000:5000
+    depends_on: 
+      - 'db'
   db:
     container_name: 'mongodb'
     image: 'mongo:latest'
@@ -10,5 +18,3 @@ services:
       - MONGO_INITDB_DATABASE=books
     volumes:
       - ./scripts/init.js:/docker-entrypoint-initdb.d/init.js:ro
-    ports:
-        - 27017:27017
